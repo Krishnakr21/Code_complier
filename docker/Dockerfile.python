@@ -1,0 +1,20 @@
+FROM python:3.11-alpine
+
+# Create app directory
+WORKDIR /workspace
+
+# Install security updates
+RUN apk update && apk upgrade
+
+# Create non-root user
+RUN addgroup -g 1001 -S python
+RUN adduser -S python -u 1001
+
+# Switch to non-root user
+USER python
+
+# Install common packages for DSA
+RUN pip install --user numpy
+
+# Default command
+CMD ["python"]

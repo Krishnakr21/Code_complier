@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  java-executor:
+    image: openjdk:17-alpine
+    container_name: java-executor
+    volumes:
+      - ./temp:/workspace
+    working_dir: /workspace
+    networks:
+      - compiler-network
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+          cpus: '0.5'
+
+  python-executor:
+    image: python:3.11-alpine
+    container_name: python-executor
+    volumes:
+      - ./temp:/workspace
+    working_dir: /workspace
+    networks:
+      - compiler-network
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+          cpus: '0.5'
+
+  node-executor:
+    image: node:18-alpine
+    container_name: node-executor
+    volumes:
+      - ./temp:/workspace
+    working_dir: /workspace
+    networks:
+      - compiler-network
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+          cpus: '0.5'
+
+  cpp-executor:
+    image: gcc:alpine
+    container_name: cpp-executor
+    volumes:
+      - ./temp:/workspace
+    working_dir: /workspace
+    networks:
+      - compiler-network
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+          cpus: '0.5'
+
+networks:
+  compiler-network:
+    driver: bridge
